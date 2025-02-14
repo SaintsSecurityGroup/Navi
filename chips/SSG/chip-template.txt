@@ -1,0 +1,50 @@
+import navi_internal
+
+# Chip documentation: https://github.com/SaintsSec/Navi/wiki/4.-Developing-Chips-%E2%80%90-Indepth
+
+command: str = "{{CHIP_NAME}}"
+use: str = "What does this chip do?"
+aliases: list = ['{{CHIP_NAME}}']
+params: dict = {
+    '-help': 'Display help information',
+    '-h': 'Display help information',
+}
+
+help_params: tuple = ('-help', '-h')
+
+
+def print_params() -> None:
+    # Print the header
+    print(f"{'Parameter':<10} | {'Description'}")
+    print("-" * 40)
+
+    # Print each dictionary item
+    for param, description in params.items():
+        print(f"{param:<10} | {description}")
+
+# What Navi calls to run this Chip
+def run(arguments=None) -> None:
+    # Get the instance of Navi. Required to access Navi-specific functions
+    navi_instance = navi_internal.navi_instance
+    navi_instance.print_message(f"How can I help you, {navi_instance.get_user()}?")
+
+    # To get a dictionary of current navi settings, and modify dictionary. Some modifications
+    # might require app restart. To prevent circular imports, keep this in a function or class.
+    #from navi_shell import get_navi_settings, modify_navi_settings
+    
+    # Optional: Converts argument tokens into a list
+    arg_array = arguments.text.split()
+    
+    # Remove the command itself
+    arg_array.pop(0)
+    
+    # Optional: Check for parameters
+    if arg_array is not None:
+        for arg in arg_array:
+            match arg:
+                case x if x in help_params:
+                    print_params()
+                    return
+                case _:
+                    navi_instance.print_message(f"Invalid parameter: {arg}")
+                    return

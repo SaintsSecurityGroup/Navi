@@ -1,10 +1,12 @@
 #!/bin/python3
 import platform
+import socket
+from datetime import datetime
+
 import psutil
 import requests
-import socket
+
 import navi_internal
-from datetime import datetime
 
 # Navi Command System Variables
 command = "navi_specs"
@@ -78,7 +80,8 @@ def run(arguments=None):
 
     # Main functions
     response_message = navi_instance.llm_chat(
-        "Give me a really simple quip about getting my systems specs. Dont include commands or references to operating systems.", True)
+        "Give me a really simple quip about getting my systems specs. Dont include commands or references to operating systems.",
+        True)
     clean_text = str(response_message).replace("(", "").replace(")", "").replace(", 200", "").replace("\"", "").replace(
         "\\n", "")
     output = clean_text + "\n"

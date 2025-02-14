@@ -1,6 +1,6 @@
 <div align="center">
   <h1> Navi | CLI - An innovation in cybersec AI</h1>
-  <h1>v0.6.5 - "CSI - Con"</h1>
+  <h1>v0.6.6 - "Specter"</h1>
 </div>
 
 ## 🤝 Sponsors / Endorsements: Thank you so much!
@@ -15,14 +15,11 @@
 
 ## ✨ **Key Features of Navi v0.6.5**
 
-- **Upgraded Navi Shell** - The shell can now execute system commands, without breaking the flow of conversation. See more below!
-- **Navi chips Upgrade** - The new alias variable within the custom scripts allow for Navi to execute scripts right from the chat. Once again not disrupting the flow.
-- **Chip Creators Guide** - We are in the process of streamlining documentation on making custom chips. 
-- **Navi Nmap Chip** - We moved the Nmap Script over to being its own chip. 
+- **Navi3b** - The first iteration of our local AI system. Currently running Llama3.2-3b with ollama in the background.
+- **Streamlined 3b install** - The install process is included the first time you launch navi (from edge currently) `navi --edge`   
+- **Navi chips Upgrade** - The chips system has been upgraded yet again with some qol, as well as a chip creator + template
+- **Chip Creators Guide** - The chip documentation has been updated to reflect recent changes to the sytem. 
 - **Wiki Re-write** - With new power comes new documentation
-- **Llama3.2 Integration** - We are running Meta's Llama AI on the backend.
-- **[Navi Mind](https://github.com/SaintsSec/Navi-Mind)** - Planning phase of the first Navi AI Model we are calling *Navi Mind*.
-- **[Navi Public Training](https://github.com/SaintsSec/Navi-Training)** - We want to be transparent about the data going into Navi. So we are building out a whole repo just for that.
 
 ### **Work In Progress**
 

@@ -13,3 +13,5 @@ image
 mido
 psutil
 prompt_toolkit==3.0.48
+PyPDF2==3.0.1
+sentence-transformers==3.3.1

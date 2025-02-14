@@ -1,4 +1,3 @@
-#!/bin/python3
 import navi_internal
 
 command = "clear"

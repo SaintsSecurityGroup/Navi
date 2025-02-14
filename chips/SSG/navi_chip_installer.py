@@ -1,13 +1,14 @@
 ﻿import os
-import sys
-import requests
-import zipfile
 import shutil
 import subprocess  # nosec
+import sys
 import uuid
-import navi_internal
+import zipfile
 
+import requests
 from colorama import Fore
+
+import navi_internal
 from navi import get_parameters
 from navi_shell import restart_navi
 
@@ -83,7 +84,7 @@ def download_and_extract(download_url):
         return None, None
 
 
-def copy_files_to_install_path(extracted_dir, install_path="/commands"):
+def copy_files_to_install_path(extracted_dir, install_path="/chips/Com"):
     installed_files = []
     try:
         for item in os.listdir(extracted_dir):
@@ -114,7 +115,7 @@ def install_requirements(extracted_dir):
         os.remove(requirements_path)
 
 
-def update_script(download_url, install_path="commands"):
+def update_script(download_url, install_path="chips/Com"):
     print("Downloading chip...")
     extracted_dir, download_guid = download_and_extract(download_url)
     if extracted_dir:
@@ -236,21 +237,39 @@ def get_installed_chips() -> list[dict[str, str]] | None:
     return modules
 
 
+def get_dev_chips():
+    import chips
+    dev_chips = []
+    for command_name, module in chips.modules.items():
+        if module.__name__.startswith("chips.Dev"):
+            command_aliases = getattr(module, 'aliases', [])
+            command_use = getattr(module, 'use', "")
+            dev_chips.append((command_name, command_use, command_aliases))
+    return dev_chips
+
+
 def list_installed_chips() -> None:
     chips = get_installed_chips()
     if chips:
-        print("Installed Chips:")
+        print("Installed Community Chips:")
         for module in chips:
             print(f"- {module['name']} (Owner: {module['owner']}, Version: {module['version']})")
     else:
-        print("No chips are installed.")
+        print("No Community Chips are installed.")
+    dev_chips = get_dev_chips()
+    if not dev_chips:
+        print("No Developer Chips are installed.")
+    else:
+        print("\nDeveloper Chips:")
+        for chip in dev_chips:
+            print(f"- {chip[0]} (Use: {chip[1]}, Aliases: {chip[2]})")
 
 
 def about_chip(name) -> dict[str, str] | None:
     log_file_path = "installed_chips.txt"
 
     if not os.path.exists(log_file_path):
-        print("No chips are installed.")
+        print("No Community Chips are installed.")
         return None
 
     with open(log_file_path, 'r') as log_file:
@@ -290,7 +309,7 @@ def about_chip(name) -> dict[str, str] | None:
                 "latest_version": latest_version
             }
 
-    print(f"The chip '{name}' is not installed.")
+    print(f"The Community Chip '{name}' is not installed.")
     return None
 
 
@@ -310,9 +329,9 @@ def update_chip(chip_name: str) -> None:
 
 def help_text() -> None:
     navi.print_message("Chip Manager\n"
-                  "chips [install | uninstall | search | update] [app/query]\n\n"
-                  "List currently installed chips\n"
-                  "chips list")
+                       "chips [install | uninstall | search | update] [app/query]\n\n"
+                       "List currently installed chips\n"
+                       "chips list")
 
 
 def run(arguments=None) -> None:

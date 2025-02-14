@@ -1,10 +1,12 @@
 """Init commands."""
-from os.path import dirname, basename, isfile, join, exists
-import os
-import sys
-import glob
 import importlib
 import logging
+import os
+import sys
+from os.path import dirname, join, exists
+from pathlib import Path
+
+package_dir = Path(__file__).parent
 
 # Add the parent directory to the Python path
 sys.path.append(dirname(dirname(__file__)))
@@ -23,7 +25,7 @@ command_usage = {}
 def load_module(name):
     """Load module with the given name."""
     try:
-        module = importlib.import_module(f".{name}", 'commands')
+        module = importlib.import_module(f".{name}", 'chips')
     except ModuleNotFoundError as e:
         print(f"Module '{name}' not found: {e}")
         logging.basicConfig(
@@ -40,11 +42,17 @@ def load_module(name):
         return module
 
 
-# List all .py files in the current directory, excluding __init__.py
+def module_name_from_path(f):
+    rel_path = f.relative_to(package_dir).with_suffix('')
+    module_name = '.'.join(rel_path.parts)
+    return module_name
+
+
+# List all .py files in the current directory and subdirectories, excluding __init__.py
 __all__ = [
-    basename(f)[:-3]
-    for f in glob.glob(join(dirname(__file__), "*.py"))
-    if isfile(f) and not f.endswith('__init__.py') and dirname(f) == dirname(__file__)
+    module_name_from_path(f)
+    for f in package_dir.rglob('*.py')
+    if f.is_file() and f.name != '__init__.py'
 ]
 
 # Load each module found in __all__

@@ -1,5 +1,5 @@
-import re
 import platform
+import re
 import subprocess  # nosec
 
 

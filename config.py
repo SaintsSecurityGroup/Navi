@@ -1,3 +1,3 @@
-server = "labs.saintssec.org"
+remote = "labs.saintssec.org"
 local = "localhost"
 port = 11434

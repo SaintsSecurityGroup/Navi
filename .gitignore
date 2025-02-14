@@ -1,7 +1,13 @@
 __pycache__/
 .vscode/settings.json
 .DS_Store
+.idea/
 *.log
 navienv/
 verification_test
 .navi_version
+.navi_history
+config
+qodana.yaml
+memories/
+data/

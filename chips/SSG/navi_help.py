@@ -1,5 +1,5 @@
 #!/bin/python3
-import commands
+import chips
 
 command = "navi_help"
 use = "Displays the help screen"
@@ -12,7 +12,7 @@ def run(arguments=None):
     max_alias_length = 0
     command_data = []
 
-    for command_name, module in commands.modules.items():
+    for command_name, module in chips.modules.items():
         command_aliases = getattr(module, 'aliases', [])
         command_use = getattr(module, 'use', "")
 

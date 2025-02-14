@@ -83,7 +83,7 @@ copy_navi() {
 
 cleanup_install_directory() {
     cd /opt/Navi || exit 1
-    declare -a files_to_remove=("install" "README.md" ".git" ".gitignore")
+    declare -a files_to_remove=("README.md" ".git" ".gitignore")
     
     for item in "${files_to_remove[@]}"; do
         if [ -e "$item" ]; then

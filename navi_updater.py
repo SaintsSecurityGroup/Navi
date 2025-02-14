@@ -1,12 +1,11 @@
+import os
+import shutil
+import subprocess  # nosec
+import sys
+import zipfile
 from typing import Any
 
 import requests
-import os
-import sys
-import subprocess  # nosec
-import zipfile
-import shutil
-
 
 global prime_navi_version
 navi_version_path = ".navi_version"
@@ -67,7 +66,8 @@ def update_version_number(version: str) -> None:
         version_file.write(version)
 
 
-def check_for_new_release(current_version: str, repo_owner: str, repo_name: str, edge: bool = False) -> tuple[str, str | None]:
+def check_for_new_release(current_version: str, repo_owner: str, repo_name: str, edge: bool = False) -> tuple[
+    str, str | None]:
     latest_release = get_latest_release(repo_owner, repo_name, edge)
     if current_version == "Unknown" or (latest_release and is_new_release(current_version, latest_release['tag_name'])):
         global prime_navi_version
